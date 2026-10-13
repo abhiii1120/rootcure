@@ -5,6 +5,7 @@ import 'lenis/dist/lenis.css';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import BookingModal from './components/common/BookingModal';
+import ServiceModal from './components/common/ServiceModal';
 
 import HomeHero from './components/home/HomeHero';
 import SignatureServices from './components/home/SignatureServices';
@@ -17,6 +18,7 @@ export default function App() {
   // Navigation states: 'home' | 'treatments' | 'studio'
   const [activePage, setActivePage] = useState('home');
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState(null);
 
   // Initialize Lenis Smooth Scrolling
   useEffect(() => {
@@ -115,6 +117,7 @@ export default function App() {
 
         {activePage === 'treatments' && (
           <TreatmentsView
+            onSelectService={(service) => setSelectedService(service)}
             onNavigate={handlePageChange}
           />
         )}
@@ -134,6 +137,12 @@ export default function App() {
       <BookingModal
         isOpen={isBookingOpen}
         onClose={() => setIsBookingOpen(false)}
+      />
+
+      {/* Treatment Details Modal (Cards 1-4) */}
+      <ServiceModal
+        service={selectedService}
+        onClose={() => setSelectedService(null)}
       />
     </div>
   );

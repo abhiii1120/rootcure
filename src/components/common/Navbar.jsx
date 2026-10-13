@@ -128,16 +128,16 @@ export default function Navbar({ activePage, setActivePage, onOpenBooking }) {
                 </button>
               ))}
               <div className="pt-2 border-t border-neutral-100">
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenBooking();
-                  }}
-                  className="w-full flex items-center justify-center gap-2 py-3 bg-[#1b2e8c] hover:bg-[#00a8e8] text-white font-semibold text-sm rounded-xl shadow-sm transition-colors"
+                <a
+                  href={CLINIC_INFO.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full flex items-center justify-center gap-2 py-3 bg-[#1b2e8c] hover:bg-[#00a8e8] text-white font-semibold text-sm rounded-xl shadow-sm transition-colors cursor-pointer"
                 >
                   <Calendar className="w-4 h-4" />
-                  <span>Request Consultation</span>
-                </button>
+                  <span>Book Appointment</span>
+                </a>
               </div>
             </div>
           </div>

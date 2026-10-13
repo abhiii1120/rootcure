@@ -1,8 +1,8 @@
 import { ArrowUpRight, ArrowRight, Calendar } from 'lucide-react';
-import { CLINICAL_PILLARS } from '../../data/services';
+import { TREATMENTS_BENTO, CLINICAL_PILLARS } from '../../data/services';
 import { CLINIC_INFO } from '../../data/clinicInfo';
 
-export default function TreatmentsView({ onNavigate }) {
+export default function TreatmentsView({ onSelectService, onNavigate }) {
   return (
     <div className="pt-24 sm:pt-28 pb-16 animate-in fade-in duration-300">
       {/* Hero Header Section */}
@@ -47,11 +47,9 @@ export default function TreatmentsView({ onNavigate }) {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 sm:mb-24">
         <div className="grid grid-cols-12 gap-6">
           {/* Card 1: Porcelain Veneers (Wide) */}
-          <a
-            href={CLINIC_INFO.whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="col-span-12 lg:col-span-7 relative min-h-[340px] sm:min-h-[400px] rounded-[2.2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 block"
+          <div
+            onClick={() => onSelectService(TREATMENTS_BENTO[0])}
+            className="col-span-12 lg:col-span-7 relative min-h-[340px] sm:min-h-[400px] rounded-[2.2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300"
           >
             <img
               src="/images/dental-veneers.jpg"
@@ -77,14 +75,12 @@ export default function TreatmentsView({ onNavigate }) {
                 </p>
               </div>
             </div>
-          </a>
+          </div>
 
           {/* Card 2: 3D Mapping */}
-          <a
-            href={CLINIC_INFO.whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="col-span-12 lg:col-span-5 relative min-h-[340px] sm:min-h-[400px] rounded-[2.2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 block"
+          <div
+            onClick={() => onSelectService(TREATMENTS_BENTO[1])}
+            className="col-span-12 lg:col-span-5 relative min-h-[340px] sm:min-h-[400px] rounded-[2.2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300"
           >
             <img
               src="/images/digital-mapping.jpg"
@@ -110,14 +106,12 @@ export default function TreatmentsView({ onNavigate }) {
                 </p>
               </div>
             </div>
-          </a>
+          </div>
 
           {/* Card 3: Artisanal Prophylaxis */}
-          <a
-            href={CLINIC_INFO.whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="col-span-12 lg:col-span-5 relative min-h-[340px] sm:min-h-[380px] rounded-[2.2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 block"
+          <div
+            onClick={() => onSelectService(TREATMENTS_BENTO[2])}
+            className="col-span-12 lg:col-span-5 relative min-h-[340px] sm:min-h-[380px] rounded-[2.2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300"
           >
             <img
               src="/images/dental-instruments.jpg"
@@ -143,14 +137,12 @@ export default function TreatmentsView({ onNavigate }) {
                 </p>
               </div>
             </div>
-          </a>
+          </div>
 
           {/* Card 4: Orthodontic Design */}
-          <a
-            href={CLINIC_INFO.whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="col-span-12 lg:col-span-7 relative min-h-[340px] sm:min-h-[380px] rounded-[2.2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 block"
+          <div
+            onClick={() => onSelectService(TREATMENTS_BENTO[3])}
+            className="col-span-12 lg:col-span-7 relative min-h-[340px] sm:min-h-[380px] rounded-[2.2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300"
           >
             <img
               src="/images/orthodontic-aligners.jpg"
@@ -176,7 +168,7 @@ export default function TreatmentsView({ onNavigate }) {
                 </p>
               </div>
             </div>
-          </a>
+          </div>
 
           {/* Card 5: Guided Implants (Full Width Feature Card) */}
           <div className="col-span-12 relative min-h-[360px] sm:min-h-[420px] rounded-[2.5rem] overflow-hidden group shadow-xl hover:shadow-2xl transition-all duration-300">

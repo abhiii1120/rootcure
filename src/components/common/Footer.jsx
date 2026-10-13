@@ -54,7 +54,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://facebook.com"
+                href={CLINIC_INFO.facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
