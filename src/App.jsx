@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import BookingModal from './components/common/BookingModal';
-import ServiceModal from './components/common/ServiceModal';
 
 import HomeHero from './components/home/HomeHero';
 import SignatureServices from './components/home/SignatureServices';
@@ -15,7 +14,6 @@ export default function App() {
   // Navigation states: 'home' | 'treatments' | 'studio'
   const [activePage, setActivePage] = useState('home');
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState(null);
 
   // Sync with browser hash if user uses anchor or back/forward
   useEffect(() => {
@@ -65,10 +63,7 @@ export default function App() {
               onOpenDoctor={handleOpenDoctor}
               onOpenBooking={() => setIsBookingOpen(true)}
             />
-            <SignatureServices
-              onSelectService={(service) => setSelectedService(service)}
-              onOpenBooking={() => setIsBookingOpen(true)}
-            />
+            <SignatureServices />
             <ExcellenceAbout
               onNavigate={handlePageChange}
               onOpenBooking={() => setIsBookingOpen(true)}
@@ -78,8 +73,6 @@ export default function App() {
 
         {activePage === 'treatments' && (
           <TreatmentsView
-            onSelectService={(service) => setSelectedService(service)}
-            onOpenBooking={() => setIsBookingOpen(true)}
             onNavigate={handlePageChange}
           />
         )}
@@ -95,16 +88,10 @@ export default function App() {
       {/* Global Shared Footer */}
       <Footer onNavigate={handlePageChange} />
 
-      {/* Interactive Modals */}
+      {/* Interactive Consultation Modal */}
       <BookingModal
         isOpen={isBookingOpen}
         onClose={() => setIsBookingOpen(false)}
-      />
-
-      <ServiceModal
-        service={selectedService}
-        onClose={() => setSelectedService(null)}
-        onOpenBooking={() => setIsBookingOpen(true)}
       />
     </div>
   );
