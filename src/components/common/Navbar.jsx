@@ -23,11 +23,6 @@ export default function Navbar({ activePage, setActivePage, onOpenBooking }) {
   const handleNavClick = (id) => {
     setMobileMenuOpen(false);
     setActivePage(id);
-    if (window.lenis) {
-      window.lenis.scrollTo(0, { immediate: false, duration: 1 });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
   };
 
   return (
