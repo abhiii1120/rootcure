@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
+
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import BookingModal from './components/common/BookingModal';
@@ -14,6 +17,37 @@ export default function App() {
   // Navigation states: 'home' | 'treatments' | 'studio'
   const [activePage, setActivePage] = useState('home');
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+
+  // Initialize Lenis Smooth Scrolling
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 1.5,
+      infinite: false,
+    });
+
+    window.lenis = lenis;
+
+    let animationFrameId;
+
+    function raf(time) {
+      lenis.raf(time);
+      animationFrameId = requestAnimationFrame(raf);
+    }
+
+    animationFrameId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      lenis.destroy();
+      window.lenis = null;
+    };
+  }, []);
 
   // Sync with browser hash if user uses anchor or back/forward
   useEffect(() => {
@@ -31,13 +65,21 @@ export default function App() {
   const handlePageChange = (page) => {
     setActivePage(page);
     window.location.hash = page;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { immediate: false, duration: 1 });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const handleHeroFilter = (filterId) => {
     const servicesSection = document.getElementById('social-proof-section');
     if (servicesSection) {
-      servicesSection.scrollIntoView({ behavior: 'smooth' });
+      if (window.lenis) {
+        window.lenis.scrollTo(servicesSection, { duration: 1.2 });
+      } else {
+        servicesSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   };
 
