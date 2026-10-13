@@ -1,8 +1,8 @@
-import { ArrowUpRight, ArrowRight, MessageCircle } from 'lucide-react';
-import { TREATMENTS_BENTO, CLINICAL_PILLARS } from '../../data/services';
+import { ArrowUpRight, ArrowRight, Calendar } from 'lucide-react';
+import { CLINICAL_PILLARS } from '../../data/services';
 import { CLINIC_INFO } from '../../data/clinicInfo';
 
-export default function TreatmentsView({ onSelectService, onOpenBooking, onNavigate }) {
+export default function TreatmentsView({ onNavigate }) {
   return (
     <div className="pt-24 sm:pt-28 pb-16 animate-in fade-in duration-300">
       {/* Hero Header Section */}
@@ -47,9 +47,11 @@ export default function TreatmentsView({ onSelectService, onOpenBooking, onNavig
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20 sm:mb-24">
         <div className="grid grid-cols-12 gap-6">
           {/* Card 1: Porcelain Veneers (Wide) */}
-          <div
-            onClick={() => onSelectService(TREATMENTS_BENTO[0])}
-            className="col-span-12 lg:col-span-7 relative min-h-[340px] sm:min-h-[400px] rounded-[2.2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300"
+          <a
+            href={CLINIC_INFO.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="col-span-12 lg:col-span-7 relative min-h-[340px] sm:min-h-[400px] rounded-[2.2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 block"
           >
             <img
               src="/images/dental-veneers.jpg"
@@ -75,12 +77,14 @@ export default function TreatmentsView({ onSelectService, onOpenBooking, onNavig
                 </p>
               </div>
             </div>
-          </div>
+          </a>
 
           {/* Card 2: 3D Mapping */}
-          <div
-            onClick={() => onSelectService(TREATMENTS_BENTO[1])}
-            className="col-span-12 lg:col-span-5 relative min-h-[340px] sm:min-h-[400px] rounded-[2.2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300"
+          <a
+            href={CLINIC_INFO.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="col-span-12 lg:col-span-5 relative min-h-[340px] sm:min-h-[400px] rounded-[2.2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 block"
           >
             <img
               src="/images/digital-mapping.jpg"
@@ -106,12 +110,14 @@ export default function TreatmentsView({ onSelectService, onOpenBooking, onNavig
                 </p>
               </div>
             </div>
-          </div>
+          </a>
 
           {/* Card 3: Artisanal Prophylaxis */}
-          <div
-            onClick={() => onSelectService(TREATMENTS_BENTO[2])}
-            className="col-span-12 lg:col-span-5 relative min-h-[340px] sm:min-h-[380px] rounded-[2.2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300"
+          <a
+            href={CLINIC_INFO.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="col-span-12 lg:col-span-5 relative min-h-[340px] sm:min-h-[380px] rounded-[2.2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 block"
           >
             <img
               src="/images/dental-instruments.jpg"
@@ -137,12 +143,14 @@ export default function TreatmentsView({ onSelectService, onOpenBooking, onNavig
                 </p>
               </div>
             </div>
-          </div>
+          </a>
 
           {/* Card 4: Orthodontic Design */}
-          <div
-            onClick={() => onSelectService(TREATMENTS_BENTO[3])}
-            className="col-span-12 lg:col-span-7 relative min-h-[340px] sm:min-h-[380px] rounded-[2.2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300"
+          <a
+            href={CLINIC_INFO.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="col-span-12 lg:col-span-7 relative min-h-[340px] sm:min-h-[380px] rounded-[2.2rem] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-300 block"
           >
             <img
               src="/images/orthodontic-aligners.jpg"
@@ -168,13 +176,10 @@ export default function TreatmentsView({ onSelectService, onOpenBooking, onNavig
                 </p>
               </div>
             </div>
-          </div>
+          </a>
 
           {/* Card 5: Guided Implants (Full Width Feature Card) */}
-          <div
-            onClick={() => onSelectService(TREATMENTS_BENTO[4])}
-            className="col-span-12 relative min-h-[360px] sm:min-h-[420px] rounded-[2.5rem] overflow-hidden group cursor-pointer shadow-xl hover:shadow-2xl transition-all duration-300"
-          >
+          <div className="col-span-12 relative min-h-[360px] sm:min-h-[420px] rounded-[2.5rem] overflow-hidden group shadow-xl hover:shadow-2xl transition-all duration-300">
             <img
               src="/images/guided-implants.jpg"
               alt="Guided Implants Surgical Navigation"
@@ -195,16 +200,16 @@ export default function TreatmentsView({ onSelectService, onOpenBooking, onNavig
               </div>
 
               <div>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onOpenBooking();
-                  }}
-                  className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/10 hover:bg-[#00a8e8] hover:text-white text-white font-bold text-xs uppercase tracking-wider backdrop-blur-md border border-white/20 transition-all duration-300 group/btn shadow-md"
+                <a
+                  href={CLINIC_INFO.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-[#1b2e8c] hover:bg-[#00a8e8] text-white font-bold text-xs uppercase tracking-wider transition-all duration-300 group/btn shadow-lg shadow-[#1b2e8c]/30 hover:scale-105 active:scale-95 cursor-pointer"
                 >
-                  <span>EXPLORE THE TECHNOLOGY</span>
+                  <Calendar className="w-4 h-4" />
+                  <span>START BOOKING YOUR APPOINTMENT</span>
                   <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -247,7 +252,7 @@ export default function TreatmentsView({ onSelectService, onOpenBooking, onNavig
           </a>
           <button
             onClick={() => onNavigate?.('studio')}
-            className="w-full sm:w-auto px-8 py-3.5 bg-white hover:bg-neutral-100 text-neutral-900 border border-neutral-200 font-bold text-xs uppercase tracking-wider rounded-full transition-all"
+            className="w-full sm:w-auto px-8 py-3.5 bg-white hover:bg-neutral-100 text-neutral-900 border border-neutral-200 font-bold text-xs uppercase tracking-wider rounded-full transition-all cursor-pointer"
           >
             MEET DR. ANKITA
           </button>
