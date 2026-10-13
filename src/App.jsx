@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import BookingModal from './components/common/BookingModal';
-import ArticleModal from './components/common/ArticleModal';
 import ServiceModal from './components/common/ServiceModal';
 
 import HomeHero from './components/home/HomeHero';
@@ -11,22 +10,18 @@ import ExcellenceAbout from './components/home/ExcellenceAbout';
 
 import TreatmentsView from './components/treatments/TreatmentsView';
 import StudioView from './components/studio/StudioView';
-import JournalView from './components/journal/JournalView';
-
-import { SIGNATURE_SERVICES, TREATMENTS_BENTO, HERO_FILTERS } from './data/services';
 
 export default function App() {
-  // Navigation states: 'home' | 'treatments' | 'studio' | 'journal'
+  // Navigation states: 'home' | 'treatments' | 'studio'
   const [activePage, setActivePage] = useState('home');
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [selectedArticle, setSelectedArticle] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
 
   // Sync with browser hash if user uses anchor or back/forward
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash.replace('#', '');
-      if (['home', 'treatments', 'studio', 'journal'].includes(hash)) {
+      if (['home', 'treatments', 'studio'].includes(hash)) {
         setActivePage(hash);
       }
     };
@@ -42,7 +37,6 @@ export default function App() {
   };
 
   const handleHeroFilter = (filterId) => {
-    // Keep hover-based inspection, no disruptive modal popup on click
     const servicesSection = document.getElementById('social-proof-section');
     if (servicesSection) {
       servicesSection.scrollIntoView({ behavior: 'smooth' });
@@ -96,13 +90,6 @@ export default function App() {
             onOpenDoctor={handleOpenDoctor}
           />
         )}
-
-        {activePage === 'journal' && (
-          <JournalView
-            onSelectArticle={(article) => setSelectedArticle(article)}
-            onOpenBooking={() => setIsBookingOpen(true)}
-          />
-        )}
       </main>
 
       {/* Global Shared Footer */}
@@ -112,12 +99,6 @@ export default function App() {
       <BookingModal
         isOpen={isBookingOpen}
         onClose={() => setIsBookingOpen(false)}
-      />
-
-      <ArticleModal
-        article={selectedArticle}
-        onClose={() => setSelectedArticle(null)}
-        onOpenBooking={() => setIsBookingOpen(true)}
       />
 
       <ServiceModal

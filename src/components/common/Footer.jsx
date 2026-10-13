@@ -1,22 +1,7 @@
-import { useState } from 'react';
-import { ArrowRight, Check, Mail, Phone, MapPin, Globe, Share2 } from 'lucide-react';
+import { Mail, Phone, MapPin } from 'lucide-react';
 import { CLINIC_INFO } from '../../data/clinicInfo';
 
 export default function Footer() {
-  const [email, setEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (email && email.includes('@')) {
-      setSubscribed(true);
-      setTimeout(() => {
-        setEmail('');
-        setSubscribed(false);
-      }, 4000);
-    }
-  };
-
   return (
     <footer id="footer-contact" className="bg-[#050d1a] text-neutral-300 pt-16 sm:pt-20 pb-12 border-t border-neutral-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -111,48 +96,12 @@ export default function Footer() {
                 </a>
               </li>
             </ul>
-
-            {/* Newsletter input */}
-            <div className="pt-2">
-              <form onSubmit={handleSubscribe} className="relative">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter email for clinical updates..."
-                  className="w-full px-4 py-2.5 pr-10 text-xs rounded-full bg-neutral-900/90 border border-neutral-800 text-white placeholder-neutral-500 focus:outline-none focus:border-[#00a8e8]"
-                />
-                <button
-                  type="submit"
-                  aria-label="Submit Newsletter"
-                  className="absolute right-1 top-1 bottom-1 px-3 bg-[#00a8e8] text-white rounded-full flex items-center justify-center hover:bg-[#0095d1] transition-colors"
-                >
-                  {subscribed ? <Check className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
-                </button>
-              </form>
-              {subscribed && (
-                <p className="text-[11px] text-[#00a8e8] mt-1.5 pl-2 font-medium">
-                  Thank you for subscribing to Root Cure Journal.
-                </p>
-              )}
-            </div>
           </div>
         </div>
 
         {/* Bottom copyright */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-500 gap-4">
+        <div className="pt-8 text-center text-xs text-neutral-500">
           <p>© 2026 Root Cure Dental. Excellence in Clinical Artistry. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <a href="#privacy" className="hover:text-neutral-400 transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#terms" className="hover:text-neutral-400 transition-colors">
-              Terms of Service
-            </a>
-            <a href="#cookies" className="hover:text-neutral-400 transition-colors">
-              Cookie Policy
-            </a>
-          </div>
         </div>
       </div>
     </footer>

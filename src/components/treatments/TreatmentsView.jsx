@@ -12,10 +12,10 @@ export default function TreatmentsView({ onSelectService, onOpenBooking, onNavig
             <span className="text-xs sm:text-sm font-bold tracking-widest text-[#00a8e8] uppercase">
               MODERN HIGH-FIDELITY HEALTHCARE
             </span>
-            <h1 className="text-4xl sm:text-6xl font-serif font-bold text-neutral-900 tracking-tight leading-[1.1]">
+            <h1 className="text-4xl sm:text-6xl font-extrabold text-neutral-900 tracking-tight leading-[1.1]">
               The Science of a Bespoke Smile.
             </h1>
-            <p className="text-neutral-600 font-serif italic text-base sm:text-lg leading-relaxed">
+            <p className="text-neutral-600 text-base sm:text-lg leading-relaxed">
               Precision clinical protocols meet artisanal aesthetics. We redefine the dental experience through high-texture technology and sensory hospitality.
             </p>
           </div>
@@ -67,7 +67,7 @@ export default function TreatmentsView({ onSelectService, onOpenBooking, onNavig
                 </span>
               </div>
               <div className="max-w-md space-y-2">
-                <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white">
+                <h3 className="text-2xl sm:text-3xl font-bold text-white">
                   Porcelain Veneers
                 </h3>
                 <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-light">
@@ -98,7 +98,7 @@ export default function TreatmentsView({ onSelectService, onOpenBooking, onNavig
                 </span>
               </div>
               <div className="space-y-2">
-                <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white">
+                <h3 className="text-2xl sm:text-3xl font-bold text-white">
                   3D Mapping
                 </h3>
                 <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-light">
@@ -129,7 +129,7 @@ export default function TreatmentsView({ onSelectService, onOpenBooking, onNavig
                 </span>
               </div>
               <div className="space-y-2">
-                <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white">
+                <h3 className="text-2xl sm:text-3xl font-bold text-white">
                   Artisanal Prophylaxis
                 </h3>
                 <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-light">
@@ -160,7 +160,7 @@ export default function TreatmentsView({ onSelectService, onOpenBooking, onNavig
                 </span>
               </div>
               <div className="max-w-md space-y-2">
-                <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white">
+                <h3 className="text-2xl sm:text-3xl font-bold text-white">
                   Orthodontic Design
                 </h3>
                 <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed font-light">
@@ -186,7 +186,7 @@ export default function TreatmentsView({ onSelectService, onOpenBooking, onNavig
                 <span className="text-[10px] font-mono tracking-widest text-[#00a8e8] uppercase block mb-3 font-bold">
                   SURGICAL PRECISION
                 </span>
-                <h3 className="text-3xl sm:text-5xl font-serif font-bold text-white tracking-tight mb-4">
+                <h3 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
                   Guided Implants
                 </h3>
                 <p className="text-sm sm:text-base text-neutral-300 leading-relaxed font-light mb-8 max-w-lg">
@@ -216,7 +216,7 @@ export default function TreatmentsView({ onSelectService, onOpenBooking, onNavig
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12">
           {CLINICAL_PILLARS.map((pillar, idx) => (
             <div key={idx} className="space-y-3">
-              <h4 className="font-serif italic font-bold text-xl sm:text-2xl text-neutral-900">
+              <h4 className="font-bold text-xl sm:text-2xl text-neutral-900">
                 {pillar.title}
               </h4>
               <p className="text-neutral-600 text-sm leading-relaxed">
@@ -229,11 +229,11 @@ export default function TreatmentsView({ onSelectService, onOpenBooking, onNavig
 
       {/* Call to action: "Ready for the Next Evolution of Your Smile?" */}
       <section className="max-w-4xl mx-auto px-4 text-center space-y-6 my-16">
-        <h2 className="text-3xl sm:text-5xl font-serif font-bold text-neutral-900 tracking-tight leading-snug">
+        <h2 className="text-3xl sm:text-5xl font-extrabold text-neutral-900 tracking-tight leading-snug">
           Ready for the Next <br className="hidden sm:block" />
           Evolution of Your Smile?
         </h2>
-        <p className="text-neutral-600 font-serif italic text-base sm:text-lg max-w-xl mx-auto">
+        <p className="text-neutral-600 text-base sm:text-lg max-w-xl mx-auto">
           Join the studio for a comprehensive aesthetic assessment and spatial mapping of your dental health.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">

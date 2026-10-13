@@ -25,7 +25,5 @@ export const CLINIC_INFO = {
 export const NAV_LINKS = [
   { id: "home", label: "Home" },
   { id: "treatments", label: "Treatments" },
-  { id: "studio", label: "About Dr. Ankita" },
-  { id: "journal", label: "Dental Care Blog" },
-  { id: "contact", label: "Contact & Location" }
+  { id: "studio", label: "About Dr. Ankita" }
 ];

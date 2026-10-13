@@ -30,7 +30,7 @@ export default function ServiceModal({ service, onClose, onOpenBooking }) {
               <span className="inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#00a8e8] text-white mb-1.5 shadow-sm">
                 {service.category || service.categoryTag || 'CLINICAL PROTOCOL'}
               </span>
-              <h2 className="text-2xl font-serif font-bold text-white">
+              <h2 className="text-2xl font-bold text-white">
                 {service.title}
               </h2>
             </div>
@@ -38,7 +38,7 @@ export default function ServiceModal({ service, onClose, onOpenBooking }) {
         )}
 
         <div className="p-6 sm:p-8 overflow-y-auto space-y-5 text-neutral-700">
-          <p className="text-base font-serif italic text-neutral-800 leading-relaxed">
+          <p className="text-base text-neutral-700 leading-relaxed">
             "{service.description || service.subtitle}"
           </p>
 

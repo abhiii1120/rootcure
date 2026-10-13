@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowUpRight, Menu, X, Calendar, Phone, Sparkles, MessageCircle } from 'lucide-react';
+import { ArrowUpRight, Menu, X, Calendar } from 'lucide-react';
 import { CLINIC_INFO } from '../../data/clinicInfo';
 
 export default function Navbar({ activePage, setActivePage, onOpenBooking }) {
@@ -18,34 +18,10 @@ export default function Navbar({ activePage, setActivePage, onOpenBooking }) {
     { id: 'home', label: 'Home' },
     { id: 'treatments', label: 'Services' },
     { id: 'studio', label: 'About us' },
-    { id: 'testimonials', label: 'Testimonials' },
-    { id: 'journal', label: 'Blog' },
-    { id: 'contact', label: 'Contact' },
   ];
 
   const handleNavClick = (id) => {
     setMobileMenuOpen(false);
-    if (id === 'contact') {
-      const footer = document.getElementById('footer-contact');
-      if (footer) {
-        footer.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        setActivePage('home');
-        setTimeout(() => {
-          document.getElementById('footer-contact')?.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
-      return;
-    }
-    if (id === 'testimonials') {
-      if (activePage !== 'home') {
-        setActivePage('home');
-      }
-      setTimeout(() => {
-        document.getElementById('social-proof-section')?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-      return;
-    }
     setActivePage(id);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -83,8 +59,7 @@ export default function Navbar({ activePage, setActivePage, onOpenBooking }) {
               const isActive =
                 (item.id === 'home' && activePage === 'home') ||
                 (item.id === 'treatments' && activePage === 'treatments') ||
-                (item.id === 'studio' && activePage === 'studio') ||
-                (item.id === 'journal' && activePage === 'journal');
+                (item.id === 'studio' && activePage === 'studio');
 
               return (
                 <button
@@ -119,18 +94,10 @@ export default function Navbar({ activePage, setActivePage, onOpenBooking }) {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex sm:hidden items-center gap-2">
-            <a
-              href={CLINIC_INFO.whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-3 py-1.5 text-[11px] font-bold rounded-full bg-[#1b2e8c] text-white"
-            >
-              BOOK
-            </a>
+          <div className="flex sm:hidden items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-neutral-800 hover:bg-neutral-100 rounded-full focus:outline-none"
+              className="p-2 text-neutral-800 hover:bg-neutral-100 rounded-full focus:outline-none cursor-pointer"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -151,8 +118,7 @@ export default function Navbar({ activePage, setActivePage, onOpenBooking }) {
                   <span>{item.label}</span>
                   {((item.id === 'home' && activePage === 'home') ||
                     (item.id === 'treatments' && activePage === 'treatments') ||
-                    (item.id === 'studio' && activePage === 'studio') ||
-                    (item.id === 'journal' && activePage === 'journal')) && (
+                    (item.id === 'studio' && activePage === 'studio')) && (
                     <span className="w-2 h-2 rounded-full bg-[#00a8e8]"></span>
                   )}
                 </button>

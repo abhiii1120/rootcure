@@ -55,7 +55,7 @@ export default function StudioView() {
                 <p className="text-xs font-semibold text-neutral-500 mb-2">
                   {doctor.role}
                 </p>
-                <p className="text-xs font-serif italic text-neutral-700 leading-relaxed">
+                <p className="text-xs italic text-neutral-700 leading-relaxed">
                   "{doctor.quote}"
                 </p>
               </div>
@@ -158,7 +158,7 @@ export default function StudioView() {
                 {i === 1 && <Microscope className="w-6 h-6" />}
                 {i === 2 && <Heart className="w-6 h-6" />}
               </div>
-              <h3 className="font-serif font-bold text-xl sm:text-2xl text-neutral-900">
+              <h3 className="font-bold text-xl sm:text-2xl text-neutral-900">
                 {standard.title}
               </h3>
               <p className="text-neutral-600 text-sm leading-relaxed">
