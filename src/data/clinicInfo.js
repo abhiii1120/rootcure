@@ -10,6 +10,7 @@ export const CLINIC_INFO = {
   whatsappUrl: "http://wa.link/8z8mcq",
   instagramUrl: "https://www.instagram.com/rootcuredentalclinic/",
   instagramHandle: "@rootcuredentalclinic",
+  facebookUrl: "https://m.facebook.com/profile.php?id=61561781914046",
   doctor: "Dr. Ankita Sarigaonkar",
   degree: "B.D.S. (Dental & Cosmetic Surgeon)",
   regNo: "Regd. No. A-39477",

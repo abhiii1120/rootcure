@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import gsap from 'gsap';
 import { ChevronLeft, ChevronRight, Star, RotateCw, CheckCircle, Clock, Calendar } from 'lucide-react';
 import { CLINIC_INFO } from '../../data/clinicInfo';
 
@@ -60,6 +61,7 @@ const SERVICES_CARDS = [
 export default function SignatureServices() {
   const [flippedIndex, setFlippedIndex] = useState(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const cardRefs = useRef([]);
 
   const reviewsAvatars = [
     '/images/dr-theresa.jpg',
@@ -67,11 +69,47 @@ export default function SignatureServices() {
     '/images/dr-albert.jpg'
   ];
 
+  // GSAP initial setup
+  useEffect(() => {
+    cardRefs.current.forEach((el) => {
+      if (el) {
+        gsap.set(el, {
+          transformStyle: 'preserve-3d',
+          transformPerspective: 1000,
+          rotateY: 0
+        });
+      }
+    });
+
+    return () => {
+      cardRefs.current.forEach((el) => {
+        if (el) gsap.killTweensOf(el);
+      });
+    };
+  }, []);
+
+  // GSAP smooth 3D flip animation
+  useEffect(() => {
+    SERVICES_CARDS.forEach((_, idx) => {
+      const el = cardRefs.current[idx];
+      if (!el) return;
+      const cardFlipped = flippedIndex === idx || hoveredIndex === idx;
+      gsap.to(el, {
+        rotateY: cardFlipped ? 180 : 0,
+        duration: 0.75,
+        ease: 'power2.inOut',
+        overwrite: 'auto'
+      });
+    });
+  }, [flippedIndex, hoveredIndex]);
+
   const handlePrev = () => {
+    setHoveredIndex(null);
     setFlippedIndex((prev) => (prev === null || prev === 0 ? SERVICES_CARDS.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
+    setHoveredIndex(null);
     setFlippedIndex((prev) => (prev === null || prev === SERVICES_CARDS.length - 1 ? 0 : prev + 1));
   };
 
@@ -158,16 +196,17 @@ export default function SignatureServices() {
               onClick={() => handleCardClick(idx)}
             >
               <div
-                className={`relative w-full h-full rounded-[2rem] transition-transform duration-700 transform-style-3d cursor-pointer ${
-                  cardFlipped ? 'rotate-y-180' : ''
-                }`}
+                ref={(el) => {
+                  cardRefs.current[idx] = el;
+                }}
+                className="relative w-full h-full rounded-[2rem] transform-style-3d cursor-pointer"
               >
                 {/* FRONT FACE */}
                 <div
-                  className={`group absolute inset-0 w-full h-full rounded-[2rem] overflow-hidden backface-hidden flip-front shadow-lg hover:shadow-2xl transition-all duration-300 ${
+                  className={`group absolute inset-0 w-full h-full rounded-[2rem] overflow-hidden backface-hidden flip-front shadow-lg hover:shadow-2xl transition-shadow duration-300 ${
                     card.frontBg
                   } text-white p-7 flex flex-col justify-between border border-white/10 ${
-                    cardFlipped ? 'pointer-events-none z-0 invisible opacity-0' : 'pointer-events-auto z-10 opacity-100'
+                    cardFlipped ? 'pointer-events-none z-0' : 'pointer-events-auto z-10'
                   }`}
                 >
                   {/* Card Art / Illustrations */}
@@ -241,7 +280,7 @@ export default function SignatureServices() {
                 {/* BACK FACE */}
                 <div
                   className={`absolute inset-0 w-full h-full rounded-[2rem] overflow-hidden backface-hidden flip-back shadow-2xl p-6 sm:p-7 flex flex-col justify-between bg-gradient-to-br from-[#0c1f44] via-[#071328] to-[#040b17] border border-[#00a8e8]/30 text-white ${
-                    cardFlipped ? 'pointer-events-auto z-20 opacity-100' : 'pointer-events-none z-0 invisible opacity-0'
+                    cardFlipped ? 'pointer-events-auto z-20' : 'pointer-events-none z-0'
                   }`}
                 >
                   {/* Subtle corner light */}
