@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import { ArrowUpRight, Calendar, ChevronLeft, ChevronRight, Phone } from 'lucide-react';
 import { HERO_TREATMENTS } from '../../data/services';
 import { CLINIC_INFO } from '../../data/clinicInfo';
@@ -52,11 +53,51 @@ export default function HomeHero({ onOpenDoctor, onOpenBooking }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const timerRef = useRef(null);
 
+  const imageRefs = useRef([]);
+  const titleRef = useRef(null);
+  const descRef = useRef(null);
+  const doctorInfoRef = useRef(null);
+  const badgeSubtitleRef = useRef(null);
+
+  const isAnimatingRef = useRef(false);
+
+  const changeSlide = (nextIndex) => {
+    if (isAnimatingRef.current) return;
+    isAnimatingRef.current = true;
+
+    // Collect elements to animate out
+    const titleLines = titleRef.current ? Array.from(titleRef.current.children) : [];
+    const elementsToFade = [
+      ...titleLines,
+      descRef.current,
+      doctorInfoRef.current,
+      badgeSubtitleRef.current
+    ].filter(Boolean);
+
+    // 1. Smoothly dissolve outgoing text upward
+    gsap.killTweensOf(elementsToFade);
+    gsap.to(elementsToFade, {
+      opacity: 0,
+      y: -12,
+      duration: 0.3,
+      ease: 'power2.in',
+      stagger: 0.02,
+      onComplete: () => {
+        // Change slide state while text is invisible
+        setCurrentSlide(nextIndex);
+      }
+    });
+  };
+
   const resetAutoplay = () => {
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 6000);
+      setCurrentSlide((curr) => {
+        const next = (curr + 1) % HERO_SLIDES.length;
+        changeSlide(next);
+        return curr;
+      });
+    }, 6500);
   };
 
   useEffect(() => {
@@ -66,13 +107,112 @@ export default function HomeHero({ onOpenDoctor, onOpenBooking }) {
     };
   }, []);
 
+  // GSAP Smooth Transition for Carousel Images and Text
+  useEffect(() => {
+    // 1. Crossfade & Subtle Scale Images
+    HERO_SLIDES.forEach((_, idx) => {
+      const imgEl = imageRefs.current[idx];
+      if (!imgEl) return;
+      if (idx === currentSlide) {
+        gsap.killTweensOf(imgEl);
+        gsap.fromTo(
+          imgEl,
+          { opacity: 0, scale: 1.05 },
+          { opacity: 1, scale: 1, duration: 1.1, ease: 'power2.out', overwrite: 'auto' }
+        );
+      } else {
+        gsap.to(imgEl, { opacity: 0, duration: 0.8, ease: 'power2.inOut', overwrite: 'auto' });
+      }
+    });
+
+    // 2. Animate Staggered Title Lines in
+    if (titleRef.current) {
+      const lines = titleRef.current.children;
+      gsap.killTweensOf(lines);
+      gsap.fromTo(
+        lines,
+        { y: 20, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.65,
+          stagger: 0.07,
+          ease: 'power3.out',
+          overwrite: 'auto',
+          clearProps: 'transform'
+        }
+      );
+    }
+
+    // 3. Animate Description in
+    if (descRef.current) {
+      gsap.killTweensOf(descRef.current);
+      gsap.fromTo(
+        descRef.current,
+        { y: 14, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          delay: 0.14,
+          ease: 'power3.out',
+          overwrite: 'auto',
+          clearProps: 'transform'
+        }
+      );
+    }
+
+    // 4. Animate Doctor Role / Info in
+    if (doctorInfoRef.current) {
+      gsap.killTweensOf(doctorInfoRef.current);
+      gsap.fromTo(
+        doctorInfoRef.current,
+        { opacity: 0, y: 10 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.55,
+          delay: 0.2,
+          ease: 'power2.out',
+          overwrite: 'auto',
+          clearProps: 'transform',
+          onComplete: () => {
+            isAnimatingRef.current = false;
+          }
+        }
+      );
+    } else {
+      isAnimatingRef.current = false;
+    }
+
+    // 5. Animate Subtitle Badge in
+    if (badgeSubtitleRef.current) {
+      gsap.killTweensOf(badgeSubtitleRef.current);
+      gsap.fromTo(
+        badgeSubtitleRef.current,
+        { opacity: 0, x: -10 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.5,
+          delay: 0.08,
+          ease: 'power2.out',
+          overwrite: 'auto',
+          clearProps: 'transform'
+        }
+      );
+    }
+  }, [currentSlide]);
+
   const handlePrevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? HERO_SLIDES.length - 1 : prev - 1));
+    const prev = currentSlide === 0 ? HERO_SLIDES.length - 1 : currentSlide - 1;
+    changeSlide(prev);
     resetAutoplay();
   };
 
   const handleNextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    const next = (currentSlide + 1) % HERO_SLIDES.length;
+    changeSlide(next);
     resetAutoplay();
   };
 
@@ -83,16 +223,18 @@ export default function HomeHero({ onOpenDoctor, onOpenBooking }) {
       <div className="max-w-7xl mx-auto">
         <div className="relative w-full min-h-[640px] lg:min-h-[700px] rounded-[2.2rem] sm:rounded-[3rem] overflow-hidden shadow-2xl flex flex-col justify-between p-6 sm:p-10 lg:p-14 border border-neutral-800/40">
           
-          {/* Carousel Background Images with Crossfade */}
-          <div className="absolute inset-0 z-0">
+          {/* Carousel Background Images with GSAP */}
+          <div className="absolute inset-0 z-0 overflow-hidden">
             {HERO_SLIDES.map((slide, idx) => (
               <img
                 key={slide.id}
+                ref={(el) => {
+                  imageRefs.current[idx] = el;
+                }}
                 src={slide.image}
                 alt={slide.titleLine1}
-                className={`absolute inset-0 w-full h-full object-cover ${slide.imagePosition} filter brightness-[0.9] contrast-[1.02] transition-opacity duration-1000 ease-in-out ${
-                  currentSlide === idx ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}
+                className={`absolute inset-0 w-full h-full object-cover ${slide.imagePosition} filter brightness-[0.9] contrast-[1.02]`}
+                style={{ opacity: idx === 0 ? 1 : 0 }}
               />
             ))}
             {/* Cinematic Gradients for typography legibility */}
@@ -126,7 +268,7 @@ export default function HomeHero({ onOpenDoctor, onOpenBooking }) {
 
             <div className="hidden md:flex items-center gap-2 text-xs text-white/80">
               <span className="w-2 h-2 rounded-full bg-[#00a8e8] animate-pulse"></span>
-              <span className="text-[11px] font-medium tracking-wide transition-all duration-300">
+              <span ref={badgeSubtitleRef} className="text-[11px] font-medium tracking-wide">
                 {activeSlide.badgeSubtitle}
               </span>
             </div>
@@ -134,9 +276,12 @@ export default function HomeHero({ onOpenDoctor, onOpenBooking }) {
 
           {/* Hero Main Content: Left Typography & Right Doctor Card + Subtitle */}
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-end my-auto py-8 sm:py-12">
-            {/* Left Column: Bold Typography */}
+            {/* Left Column: Bold Typography with GSAP Stagger */}
             <div className="lg:col-span-7 space-y-3">
-              <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] font-extrabold text-white tracking-tight leading-[0.96] uppercase drop-shadow-md transition-all duration-500">
+              <h1
+                ref={titleRef}
+                className="text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] font-extrabold text-white tracking-tight leading-[0.96] uppercase drop-shadow-md overflow-hidden"
+              >
                 <span className="block">{activeSlide.titleLine1}</span>
                 <span className="block">{activeSlide.titleLine2}</span>
                 <span className="block">{activeSlide.titleLine3}</span>
@@ -146,7 +291,10 @@ export default function HomeHero({ onOpenDoctor, onOpenBooking }) {
 
             {/* Right Column: Subtitle + Doctor Card + Book Appointment CTA */}
             <div className="lg:col-span-5 flex flex-col justify-end space-y-5 lg:pl-4">
-              <p className="text-neutral-200 text-sm sm:text-base leading-relaxed max-w-md font-light drop-shadow min-h-[48px] transition-all duration-300">
+              <p
+                ref={descRef}
+                className="text-neutral-200 text-sm sm:text-base leading-relaxed max-w-md font-light drop-shadow min-h-[48px]"
+              >
                 {activeSlide.description}
               </p>
 
@@ -157,7 +305,7 @@ export default function HomeHero({ onOpenDoctor, onOpenBooking }) {
                   alt="Dr. Ankita Sarigaonkar"
                   className="w-12 h-12 rounded-xl object-cover shrink-0 border border-neutral-200 shadow-sm"
                 />
-                <div className="flex-1 min-w-0">
+                <div ref={doctorInfoRef} className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <h4 className="text-xs sm:text-sm font-bold text-neutral-900 truncate">
                       Dr. Ankita Sarigaonkar
@@ -203,12 +351,12 @@ export default function HomeHero({ onOpenDoctor, onOpenBooking }) {
           <div className="relative z-20 w-full pt-4">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-t border-white/10 pt-4">
               
-              {/* Treatment Pills - Display only, non-clickable */}
-              <div className="flex items-center gap-2 overflow-x-auto pb-1 max-w-full no-scrollbar">
+              {/* Treatment Pills - Display only, non-clickable, wrap naturally without horizontal scrollbar */}
+              <div className="flex flex-wrap items-center gap-2 max-w-full">
                 {HERO_TREATMENTS.map((treatment) => (
                   <div
                     key={treatment.id}
-                    className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium bg-white/15 text-white/90 backdrop-blur-md border border-white/15 select-none shrink-0"
+                    className="px-3.5 sm:px-5 py-1.5 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium bg-white/15 text-white/90 backdrop-blur-md border border-white/15 select-none"
                   >
                     <span>{treatment.label}</span>
                   </div>

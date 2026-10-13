@@ -7,7 +7,7 @@ export default function StudioView() {
   const doctor = DOCTORS[0]; // Dr. Ankita Sarigaonkar
 
   return (
-    <div className="pt-24 sm:pt-28 pb-16 animate-in fade-in duration-300">
+    <div className="pt-24 sm:pt-28 pb-16">
       {/* Studio Hero */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 sm:mb-24">
         <div className="relative min-h-[440px] sm:min-h-[500px] rounded-[2.5rem] overflow-hidden flex flex-col justify-end p-8 sm:p-14 shadow-2xl">

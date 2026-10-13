@@ -4,7 +4,7 @@ import { CLINIC_INFO } from '../../data/clinicInfo';
 
 export default function TreatmentsView({ onSelectService, onNavigate }) {
   return (
-    <div className="pt-24 sm:pt-28 pb-16 animate-in fade-in duration-300">
+    <div className="pt-24 sm:pt-28 pb-16">
       {/* Hero Header Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-10 border-b border-neutral-200">
